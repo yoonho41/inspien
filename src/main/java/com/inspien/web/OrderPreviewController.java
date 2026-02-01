@@ -4,12 +4,12 @@ import com.inspien.dto.OrderPreviewDTO;
 import com.inspien.util.OrderPreviewMapper;
 import com.inspien.util.OrderXmlParser;
 import lombok.RequiredArgsConstructor;
+
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -27,7 +27,7 @@ public class OrderPreviewController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )   
     public ResponseEntity<?> preview(@RequestBody String xml) {
-        String traceId = UUID.randomUUID().toString().replace("-", "");
+        String traceId = MDC.get("traceId");
 
         try {
             var parsed = xmlParser.parse(xml);
@@ -43,7 +43,7 @@ public class OrderPreviewController {
             );
 
         } catch (IllegalArgumentException e) {
-            // Preview 단계에서는 "간단한 실패 응답"만
+            
             return ResponseEntity.badRequest().body(
                     OrderPreviewDTO.builder()
                             .traceId(traceId)
