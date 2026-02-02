@@ -40,4 +40,26 @@
         SELECT 1 FROM DUAL
     </insert>
 
+    <select id="selectOrdersByIds" resultType="com.inspien.dto.OrderDTO">
+        SELECT
+            ORDER_ID AS orderId,
+            USER_ID AS userId,
+            ITEM_ID AS itemId,
+            APPLICANT_KEY AS applicantKey,
+            NAME AS name,
+            ADDRESS AS address,
+            ITEM_NAME AS itemName,
+            PRICE AS price,
+            STATUS AS status
+        FROM ORDER_TB
+        WHERE APPLICANT_KEY = #{applicantKey}
+          AND ORDER_ID IN
+        <foreach collection="orderIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        ORDER BY ORDER_ID
+    </select>
+
+
+
 </mapper>

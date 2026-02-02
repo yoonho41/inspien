@@ -12,4 +12,10 @@ public interface OrderMapper {
     String selectMaxOrderId(@Param("applicantKey") String applicantKey);
 
     int insertOrders(@Param("rows") List<OrderDTO> rows);
+
+    List<OrderDTO> selectOrdersByIds(
+      @Param("applicantKey") String applicantKey,
+      @Param("orderIds") List<String> orderIds
+    );
+
 }

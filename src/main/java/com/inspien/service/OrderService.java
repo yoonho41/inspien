@@ -1,6 +1,9 @@
 package com.inspien.service;
 
 import com.inspien.dto.OrderDTO;
+import com.inspien.infra.ReceiptMetaDTO;
+import com.inspien.infra.ReceiptOutbox;
+import com.inspien.infra.SftpUploader;
 import com.inspien.mapper.OrderMapper;
 import com.inspien.util.OrderPreviewMapper;
 import com.inspien.util.OrderXmlParser;
@@ -13,7 +16,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -32,6 +42,22 @@ public class OrderService {
     private static final int MAX_RETRY = 5;
     private static final int CHUNK_SIZE = 200;
 
+
+    private final SftpUploader sftpUploader;
+
+    @Value("${inspien.receipt.participant-name}")
+    private String participantName;
+
+    @Value("${inspien.receipt.local-dir}")
+    private String receiptLocalDir;
+
+
+    private final ReceiptOutbox receiptOutbox;
+
+    @Value("${inspien.sftp.retry.maxAttempts:10}")
+    private int maxAttempts;
+
+
     public Map<String, Object> create(String xml) {
         String traceId = MDC.get("traceId");
 
@@ -42,12 +68,98 @@ public class OrderService {
 
         insertWithId(rows);
 
+        String receiptFileName = buildReceiptFileName();
+
+        ReceiptMetaDTO meta = new ReceiptMetaDTO();
+        meta.setTraceId(traceId);
+        meta.setApplicantKey(applicantKey);
+        meta.setFileName(receiptFileName);
+        meta.setOrderIds(rows.stream().map(OrderDTO::getOrderId).collect(Collectors.toList()));
+        meta.setAttempts(0);
+        meta.setNextAttemptAtEpochMs(System.currentTimeMillis());
+        meta.setLastError(null);
+
+        receiptOutbox.writeMetaToPending(meta);
+
+        boolean isReceiptCreated = false;
+
+        try {
+            String content = buildReceiptContent(rows);
+            receiptOutbox.writeReceiptToPending(receiptFileName, content);
+            isReceiptCreated = true;
+        } catch (Exception e) {
+            // 파일 생성 실패해도 meta가 있으므로 스케줄러가 DB로 재생성 가능
+            meta.setAttempts(1);
+            meta.setLastError("RECEIPT_CREATE_FAIL: " + e.getMessage());
+            meta.setNextAttemptAtEpochMs(receiptOutbox.calcNextAttemptAt(meta.getAttempts()));
+            receiptOutbox.updateMeta(receiptOutbox.metaPathInPending(receiptFileName), meta);
+
+            log.error("Receipt create failed. Will retry via scheduler. traceId={}, fileName={}, msg={}",
+                    traceId, receiptFileName, e.getMessage(), e);
+        }
+
+        boolean sftpUploaded = false;
+
+        if (isReceiptCreated) {
+            Path pendingFile = receiptOutbox.receiptPathInPending(receiptFileName);
+
+            try {
+                sftpUploader.upload(pendingFile, receiptFileName);
+                sftpUploaded = true;
+
+                // 성공하면 sent로 이동
+                receiptOutbox.markSent(receiptFileName);
+
+            } catch (Exception e) {
+                // SFTP 업로드 실패하면 pending에 남기고 스케줄러가 재시도
+                int nextAttempts = meta.getAttempts() + 1;
+                meta.setAttempts(nextAttempts);
+                meta.setLastError("SFTP_FAIL: " + e.getMessage());
+
+                if (nextAttempts >= maxAttempts) {
+                    receiptOutbox.updateMeta(receiptOutbox.metaPathInPending(receiptFileName), meta);
+                    receiptOutbox.markFailed(receiptFileName);
+
+                    log.error("SFTP final-fail. moved to failed. traceId={}, fileName={}, attempts={}, msg={}",
+                            traceId, receiptFileName, nextAttempts, e.getMessage(), e);
+
+                } else {
+                    meta.setNextAttemptAtEpochMs(receiptOutbox.calcNextAttemptAt(nextAttempts));
+                    receiptOutbox.updateMeta(receiptOutbox.metaPathInPending(receiptFileName), meta);
+
+                    log.error("SFTP upload failed. Will retry via scheduler. traceId={}, fileName={}, attempts={}, msg={}",
+                            traceId, receiptFileName, nextAttempts, e.getMessage(), e);
+                }
+            }
+        }
+
+        log.info("Receipt prepared. traceId={}, fileName={}, isReceiptCreated={}, sftpUploaded={}",
+                traceId, receiptFileName, isReceiptCreated, sftpUploaded);
+
+
+        // 요청자에게 응답
+        if (!sftpUploaded) {
+            return Map.of(
+                    "traceId", traceId,
+                    "success", false,
+                    "dbInserted", true,
+                    "sftpUploaded", false,
+                    "receiptFileName", receiptFileName,
+                    "recordCount", rows.size(),
+                    "orderIds", rows.stream().map(OrderDTO::getOrderId).collect(Collectors.toList()),
+                    "message", "DB insert succeeded but SFTP upload failed. Receipt kept locally for retry."
+            );
+        }
+
         return Map.of(
-            "traceId", traceId,
-            "success", true,
-            "recordCount", rows.size(),
-            "orderIds", rows.stream().map(OrderDTO::getOrderId).toList()
-    );
+                "traceId", traceId,
+                "success", true,
+                "dbInserted", true,
+                "sftpUploaded", true,
+                "receiptFileName", receiptFileName,
+                "recordCount", rows.size(),
+                "orderIds", rows.stream().map(OrderDTO::getOrderId).collect(Collectors.toList())
+        );
     }
 
     /**
@@ -135,5 +247,29 @@ public class OrderService {
         }
     }
 
+    private String buildReceiptFileName() {
+        // 파일명: INSPIEN_[참여자명]_[yyyyMMddHHmmss].txt
+        String ts = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+        return "INSPIEN_" + participantName + "_" + ts + ".txt";
+    }
+
+
+    // 요구사항 포맷으로 영수증 내용 생성
+    private String buildReceiptContent(List<OrderDTO> rows) {
+        // ORDER_ID^USER_ID^ITEM_ID^APPLICANT_KEY^NAME^ADDRESS^ITEM_NAME^PRICE\n
+        StringBuilder sb = new StringBuilder(rows.size() * 96);
+        for (OrderDTO r : rows) {
+            sb.append(r.getOrderId()).append('^')
+              .append(r.getUserId()).append('^')
+              .append(r.getItemId()).append('^')
+              .append(r.getApplicantKey()).append('^')
+              .append(r.getName()).append('^')
+              .append(r.getAddress()).append('^')
+              .append(r.getItemName()).append('^')
+              .append(r.getPrice())
+              .append('\n');
+        }
+        return sb.toString();
+    }
 
 }

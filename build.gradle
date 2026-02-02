@@ -37,6 +37,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
 
+	implementation 'com.github.mwiede:jsch:2.27.7'
 }
 
 tasks.named('test') {
