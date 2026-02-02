@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.inspien.mapper.OrderMapper">
+
+    <select id="selectMaxOrderId" resultType="string">
+        SELECT MAX(ORDER_ID)
+        FROM ORDER_TB
+        WHERE APPLICANT_KEY = #{applicantKey}
+    </select>
+
+    <insert id="insertOrders">
+        INSERT ALL
+        <foreach collection="rows" item="r">
+            INTO ORDER_TB (
+                ORDER_ID, 
+                USER_ID, 
+                ITEM_ID, 
+                APPLICANT_KEY, 
+                NAME, 
+                ADDRESS, 
+                ITEM_NAME, 
+                PRICE, 
+                STATUS
+            ) 
+            VALUES (
+                #{r.orderId}, 
+                #{r.userId}, 
+                #{r.itemId}, 
+                #{r.applicantKey}, 
+                #{r.name}, 
+                #{r.address}, 
+                #{r.itemName}, 
+                #{r.price}, 
+                #{r.status}
+            )
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+</mapper>
