@@ -44,14 +44,15 @@ public class AdminReceiptService {
             );
         }
 
-        // ✅ 이 작업의 로그를 “대상 traceId”로 묶고 싶으면, 여기서 MDC를 덮어쓴다.
-        // (원하면 관리자 호출 traceId와 대상 traceId를 따로 남기는 것도 가능)
-        MDC.put("traceId", req.traceId); // 🧩 핵심: 대상 traceId로 로그 상관관계
+        // 현재 처리하려는 traceId(요청자에게 전달받은 값)를 이 작업의 traceId에 덮어씀 (추적/관리 용이)
+        MDC.put("traceId", req.traceId);
 
         try {
             outbox.ensureDirs();
 
             Found found = findMetaByTraceId(req.traceId);
+
+            // meta 파일이 없으면 사실상 처리가 불가능함. app 오류보다는 인프라 이슈 가능성 점검 필요
             if (found == null) {
                 log.warn("No receipt meta found for traceId={}", req.traceId);
                 return Map.of(
@@ -65,13 +66,15 @@ public class AdminReceiptService {
             String oldFileName = meta.getFileName();
             String newFileName = oldFileName;
 
-            // 1) (선택) 이름 변경 요청이 있으면 fileName 교체 + 파일/메타 rename + meta 내용 업데이트
+            // 1) 이름 변경 요청이 있으면 fileName 변경 + 파일 및 meta rename + meta 내용 업데이트
             if (req.newParticipantName != null && !req.newParticipantName.isBlank()) {
                 String renamed = buildRenamedFileName(oldFileName, req.newParticipantName);
+
                 if (renamed != null && !renamed.equals(oldFileName)) {
                     newFileName = renamed;
                     renameReceiptAndMeta(found, oldFileName, newFileName);
                     meta.setFileName(newFileName);
+
                     // meta 파일 위치가 바뀌었으니 metaPath도 갱신
                     found.metaPath = found.dir.resolve(newFileName + ".meta.json");
                     outbox.updateMeta(found.metaPath, meta);
@@ -98,7 +101,7 @@ public class AdminReceiptService {
                 }
 
                 String content = buildReceiptContent(rows);
-                // 🧩 관리자 API에서는 outbox가 pending/failed 어느 쪽이든 “그 위치에” 재생성
+
                 Files.writeString(receiptPath, content, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
                 log.info("Receipt recreated. fileName={} path={}", newFileName, receiptPath);
             }
@@ -108,7 +111,7 @@ public class AdminReceiptService {
             sftpUploader.upload(receiptPath, newFileName);
             log.info("ADMIN SFTP retry success. fileName={}", newFileName);
 
-            // 4) 성공 시 sent로 이동(정리)
+            // 4) 성공 시 sent로 이동
             moveToSent(found.dir, newFileName);
 
             return Map.of(
@@ -132,12 +135,9 @@ public class AdminReceiptService {
         }
     }
 
-    // ------------------------------
-    // 내부 로직들
-    // ------------------------------
 
     private Found findMetaByTraceId(String traceId) {
-        // pending 우선 → 없으면 failed
+        // pending 부터 찾아보고 없으면 failed 에서 찾아보기
         Found f = scanDirForTraceId(outbox.pendingDir(), "pending", traceId);
         if (f != null) return f;
         return scanDirForTraceId(outbox.failedDir(), "failed", traceId);
@@ -153,7 +153,6 @@ public class AdminReceiptService {
                 }
             }
         } catch (NoSuchFileException e) {
-            // 폴더가 없으면 outbox.ensureDirs()가 만들지만, 방어
             return null;
         } catch (Exception e) {
             log.error("scanDirForTraceId failed. dir={}, msg={}", dir, e.getMessage(), e);
@@ -161,6 +160,7 @@ public class AdminReceiptService {
         return null;
     }
 
+    // 파일 이름 변경
     private void renameReceiptAndMeta(Found found, String oldFileName, String newFileName) throws Exception {
         Path oldReceipt = found.dir.resolve(oldFileName);
         Path newReceipt = found.dir.resolve(newFileName);
@@ -168,7 +168,7 @@ public class AdminReceiptService {
         Path oldMeta = found.dir.resolve(oldFileName + ".meta.json");
         Path newMeta = found.dir.resolve(newFileName + ".meta.json");
 
-        // 이미 존재하면 덮어쓰지 않도록 방어(관리자 실수 방지)
+        // 이미 존재하면 덮어쓰지 않도록 처리
         if (Files.exists(newReceipt) || Files.exists(newMeta)) {
             throw new IllegalStateException("Target filename already exists: " + newFileName);
         }
@@ -181,8 +181,8 @@ public class AdminReceiptService {
         }
     }
 
+    // outbox.sentDir로 이동
     private void moveToSent(Path sourceDir, String fileName) throws Exception {
-        // outbox.sentDir로 이동
         Path sentDir = outbox.sentDir();
         Files.createDirectories(sentDir);
 
@@ -197,6 +197,7 @@ public class AdminReceiptService {
         }
     }
 
+    // 변경할 파일 이름 생성
     private String buildRenamedFileName(String oldFileName, String newName) {
         // INSPIEN_<anything>_<14digits>.txt 에서 timestamp만 유지하고 이름만 교체
         Matcher m = RECEIPT_NAME_PATTERN.matcher(oldFileName);
@@ -224,16 +225,13 @@ public class AdminReceiptService {
                 .collect(Collectors.joining("\n")) + "\n";
     }
 
-    // ------------------------------
-    // 관리자 요청 XML 파싱
-    // ------------------------------
 
+    // 관리자 요청 XML 파싱 (OrderXmlParser와 같은 역할)
     private AdminReq parseAdminXml(String rawXml) {
         if (rawXml == null || rawXml.isBlank()) {
             throw new IllegalArgumentException("XML body is empty.");
         }
 
-        // 루트 없는 XML 방어
         String xml = rawXml.trim();
 
         try {
@@ -252,7 +250,7 @@ public class AdminReceiptService {
 
             AdminReq req = new AdminReq();
             req.traceId = traceId;
-            req.newParticipantName = name; // null/blank면 이름 변경 안 함
+            req.newParticipantName = name;
             return req;
 
         } catch (Exception e) {
@@ -278,8 +276,8 @@ public class AdminReceiptService {
     }
 
     private static class Found {
-        final Path dir;        // pending or failed
-        final String location; // "pending" or "failed"
+        final Path dir;        // pending 또는 failed (경로)
+        final String location; // "pending" 또는 "failed" (String값)
         Path metaPath;
         final ReceiptMetaDTO meta;
         final String fileName;

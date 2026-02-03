@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.inspien.mapper.ShipmentMapper">
+
+    <select id="selectUnsentOrdersForUpdate" resultType="com.inspien.dto.OrderDTO">
+        SELECT
+            ORDER_ID      AS orderId,
+            ITEM_ID       AS itemId,
+            APPLICANT_KEY AS applicantKey,
+            ADDRESS       AS address,
+            STATUS        AS status
+        FROM ORDER_TB
+        WHERE APPLICANT_KEY = #{applicantKey}
+          AND STATUS = 'N'
+          AND ROWNUM &lt;= #{limit}
+        FOR UPDATE SKIP LOCKED
+    </select>
+
+
+    <insert id="insertShipments">
+        INSERT ALL
+        <foreach collection="rows" item="r">
+            INTO SHIPMENT_TB (
+                SHIPMENT_ID, ORDER_ID, ITEM_ID, APPLICANT_KEY, ADDRESS
+            ) VALUES (
+                #{r.shipmentId}, #{r.orderId}, #{r.itemId}, #{r.applicantKey}, #{r.address}
+            )
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+
+    <update id="updateOrderStatusY">
+        UPDATE ORDER_TB
+        SET STATUS = 'Y'
+        WHERE APPLICANT_KEY = #{applicantKey}
+          AND ORDER_ID IN
+        <foreach collection="orderIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+</mapper>
