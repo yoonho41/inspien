@@ -28,6 +28,9 @@ public class ReceiptRetryScheduler {
     @Value("${inspien.sftp.retry.maxAttempts:10}")
     private int maxAttempts;
 
+    @Value("${inspien.sftp.retry.initialDelayMs:90000}")
+    private long initialRetryDelayMs;
+
     private final ReentrantLock lock = new ReentrantLock();
 
     @Scheduled(fixedDelayString = "${inspien.sftp.retry.fixedDelayMs:60000}")
@@ -43,6 +46,10 @@ public class ReceiptRetryScheduler {
                     // 재시도 로그에도 아까 실패했던 요청의 traceId를 적용해서 추적을 용이하게 함
                     MDC.put("traceId", meta.getTraceId());
                     try {
+                        if (meta.getAttempts() == 0 && (meta.getLastError() == null || meta.getLastError().isBlank())) {
+                            continue; // 실패 이력 없는 영수증이면 혹시 모를 작업 충돌 방지를 위해서 스킵
+                        }
+
                         long now = Instant.now().toEpochMilli();
                         if (meta.getNextAttemptAtEpochMs() > now) continue;
 
@@ -100,7 +107,7 @@ public class ReceiptRetryScheduler {
             outbox.updateMeta(metaPath, meta);
             outbox.markFailed(meta.getFileName());
         } else {
-            meta.setNextAttemptAtEpochMs(outbox.calcNextAttemptAt(nextAttempts));
+            meta.setNextAttemptAtEpochMs(System.currentTimeMillis());
             outbox.updateMeta(metaPath, meta);
             log.warn("SFTP RETRY fail (will retry). fileName={}, attempts={}, nextAt={}, msg={}",
                     meta.getFileName(), nextAttempts, meta.getNextAttemptAtEpochMs(), e.getMessage());

@@ -94,10 +94,10 @@ public class ReceiptOutbox {
     }
 
     // 백오프(재시도 간격): 2^attempts 초, 최대 10분
-    public long calcNextAttemptAt(int attempts) {
-        long delayMs = Math.min(10 * 60 * 1000L, (1L << Math.min(attempts, 10)) * 1000L);
-        return Instant.now().toEpochMilli() + delayMs;
-    }
+    // public long calcNextAttemptAt(int attempts) {
+    //     long delayMs = Math.min(10 * 60 * 1000L, (1L << Math.min(attempts, 10)) * 1000L);
+    //     return Instant.now().toEpochMilli() + delayMs;
+    // }
 
     private String toJson(ReceiptMetaDTO meta) {
         try {

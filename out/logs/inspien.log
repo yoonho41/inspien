@@ -77,3 +77,179 @@
 2026-02-03 16:02:18.122 INFO  [SHIPBATCH-20260203160218] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
 2026-02-03 16:07:18.134 INFO  [SHIPBATCH-20260203160718] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
 2026-02-03 16:07:18.143 INFO  [SHIPBATCH-20260203160718] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-03 18:44:25.632 INFO  [] com.inspien.InspienApplication - Starting InspienApplication using Java 17.0.12 with PID 24420 (C:\ÀÎ½ºÇÇ¾ð °úÁ¦\inspien_test\build\classes\java\main started by human-31 in C:\ÀÎ½ºÇÇ¾ð °úÁ¦\inspien_test)
+2026-02-03 18:44:25.636 INFO  [] com.inspien.InspienApplication - No active profile set, falling back to 1 default profile: "default"
+2026-02-03 18:44:26.958 INFO  [] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-02-03 18:44:26.978 INFO  [] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-02-03 18:44:26.979 INFO  [] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-02-03 18:44:27.046 INFO  [] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-02-03 18:44:27.046 INFO  [] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1353 ms
+2026-02-03 18:44:28.075 INFO  [] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-02-03 18:44:28.090 INFO  [] com.inspien.InspienApplication - Started InspienApplication in 3.057 seconds (process running for 3.521)
+2026-02-03 18:44:57.072 INFO  [] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-03 18:44:57.073 INFO  [] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-02-03 18:44:57.075 INFO  [] o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2026-02-03 18:44:57.164 INFO  [5abd9759d1a746478a5e9fd592c8d53d] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-02-03 18:44:57.643 INFO  [5abd9759d1a746478a5e9fd592c8d53d] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@268921e7
+2026-02-03 18:44:57.645 INFO  [5abd9759d1a746478a5e9fd592c8d53d] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-02-03 18:44:58.103 INFO  [SHIPBATCH-20260203184458] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-03 18:44:58.124 INFO  [SHIPBATCH-20260203184458] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-03 18:44:58.320 INFO  [5abd9759d1a746478a5e9fd592c8d53d] com.inspien.web.TraceIdFilter - REQ traceId=5abd9759d1a746478a5e9fd592c8d53d POST /api/orders -> result=FAIL status=400 elapsedMs=1238
+2026-02-03 18:49:58.141 INFO  [SHIPBATCH-20260203184958] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-03 18:49:58.151 INFO  [SHIPBATCH-20260203184958] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-03 18:54:58.167 INFO  [SHIPBATCH-20260203185458] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-03 18:54:58.175 INFO  [SHIPBATCH-20260203185458] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-03 18:59:58.189 INFO  [SHIPBATCH-20260203185958] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-03 18:59:58.198 INFO  [SHIPBATCH-20260203185958] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-03 19:04:58.226 INFO  [SHIPBATCH-20260203190458] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-03 19:04:58.234 INFO  [SHIPBATCH-20260203190458] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 20:21:02.487 INFO  [] com.inspien.InspienApplication - Starting InspienApplication using Java 17.0.18 with PID 20564 (C:\VSCode\inspien\build\classes\java\main started by Yoon Ho Kim in C:\VSCode\inspien)
+2026-02-07 20:21:02.496 INFO  [] com.inspien.InspienApplication - No active profile set, falling back to 1 default profile: "default"
+2026-02-07 20:21:04.813 INFO  [] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-02-07 20:21:04.840 INFO  [] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-02-07 20:21:04.840 INFO  [] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-02-07 20:21:04.980 INFO  [] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-02-07 20:21:04.982 INFO  [] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2357 ms
+2026-02-07 20:21:06.441 INFO  [] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-02-07 20:21:06.471 INFO  [] com.inspien.InspienApplication - Started InspienApplication in 5.542 seconds (process running for 6.694)
+2026-02-07 20:21:36.484 INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-02-07 20:21:37.253 INFO  [] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@26f89aba
+2026-02-07 20:21:37.258 INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-02-07 20:21:37.270 INFO  [SHIPBATCH-20260207202137] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 20:21:38.078 INFO  [SHIPBATCH-20260207202137] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 20:26:38.126 INFO  [SHIPBATCH-20260207202638] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 20:26:38.142 INFO  [SHIPBATCH-20260207202638] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 20:31:38.175 INFO  [SHIPBATCH-20260207203138] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 20:31:38.191 INFO  [SHIPBATCH-20260207203138] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 20:36:38.226 INFO  [SHIPBATCH-20260207203638] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 20:36:38.244 INFO  [SHIPBATCH-20260207203638] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 20:41:38.292 INFO  [SHIPBATCH-20260207204138] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 20:41:38.307 INFO  [SHIPBATCH-20260207204138] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 20:46:38.342 INFO  [SHIPBATCH-20260207204638] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 20:46:38.356 INFO  [SHIPBATCH-20260207204638] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 20:51:38.379 INFO  [SHIPBATCH-20260207205138] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 20:51:38.395 INFO  [SHIPBATCH-20260207205138] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 20:56:38.417 INFO  [SHIPBATCH-20260207205638] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 20:56:38.434 INFO  [SHIPBATCH-20260207205638] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 21:01:38.458 INFO  [SHIPBATCH-20260207210138] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 21:01:38.469 INFO  [SHIPBATCH-20260207210138] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 21:06:38.494 INFO  [SHIPBATCH-20260207210638] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 21:06:38.505 INFO  [SHIPBATCH-20260207210638] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 21:11:38.529 INFO  [SHIPBATCH-20260207211138] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 21:11:38.559 INFO  [SHIPBATCH-20260207211138] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 21:16:38.587 INFO  [SHIPBATCH-20260207211638] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 21:16:38.598 INFO  [SHIPBATCH-20260207211638] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 21:21:38.636 INFO  [SHIPBATCH-20260207212138] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 21:21:38.653 INFO  [SHIPBATCH-20260207212138] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 21:26:38.677 INFO  [SHIPBATCH-20260207212638] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 21:26:38.693 INFO  [SHIPBATCH-20260207212638] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 21:31:38.717 INFO  [SHIPBATCH-20260207213138] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 21:31:38.733 INFO  [SHIPBATCH-20260207213138] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 21:36:38.766 INFO  [SHIPBATCH-20260207213638] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 21:36:38.797 INFO  [SHIPBATCH-20260207213638] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 21:41:38.822 INFO  [SHIPBATCH-20260207214138] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 21:41:38.838 INFO  [SHIPBATCH-20260207214138] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 21:46:38.870 INFO  [SHIPBATCH-20260207214638] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 21:46:38.892 INFO  [SHIPBATCH-20260207214638] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 21:51:38.917 INFO  [SHIPBATCH-20260207215138] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 21:51:38.930 INFO  [SHIPBATCH-20260207215138] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 21:53:05.475 INFO  [] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-07 21:53:05.478 INFO  [] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-02-07 21:53:05.568 INFO  [] o.s.web.servlet.DispatcherServlet - Completed initialization in 81 ms
+2026-02-07 21:53:07.655 INFO  [74ec16227eb14e54a87448c21d031c1e] com.inspien.infra.SftpUploader - SFTP connecting... host=211.106.171.36, port=20423, user=inspien, remoteDir=/recruit/2026
+2026-02-07 21:53:08.009 INFO  [74ec16227eb14e54a87448c21d031c1e] c.i.scheduler.ReceiptRetryScheduler - SFTP RETRY start. fileName=INSPIEN_±èÀ±È£_20260207215306.txt, attempts=0
+2026-02-07 21:53:08.011 INFO  [74ec16227eb14e54a87448c21d031c1e] com.inspien.infra.SftpUploader - SFTP connecting... host=211.106.171.36, port=20423, user=inspien, remoteDir=/recruit/2026
+2026-02-07 21:53:27.249 INFO  [74ec16227eb14e54a87448c21d031c1e] com.inspien.infra.SftpUploader - SFTP uploading... localFile=.\out\receipts\pending\INSPIEN_±èÀ±È£_20260207215306.txt, remoteFileName=INSPIEN_±èÀ±È£_20260207215306.txt
+2026-02-07 21:53:31.810 INFO  [74ec16227eb14e54a87448c21d031c1e] com.inspien.infra.SftpUploader - SFTP uploading... localFile=.\out\receipts\pending\INSPIEN_±èÀ±È£_20260207215306.txt, remoteFileName=INSPIEN_±èÀ±È£_20260207215306.txt
+2026-02-07 21:53:31.820 INFO  [74ec16227eb14e54a87448c21d031c1e] com.inspien.infra.SftpUploader - SFTP upload success. remote=/recruit/2026/INSPIEN_±èÀ±È£_20260207215306.txt
+2026-02-07 21:53:31.837 INFO  [74ec16227eb14e54a87448c21d031c1e] c.i.scheduler.ReceiptRetryScheduler - SFTP RETRY success. fileName=INSPIEN_±èÀ±È£_20260207215306.txt
+2026-02-07 21:53:31.847 ERROR [74ec16227eb14e54a87448c21d031c1e] com.inspien.infra.ReceiptOutbox - Move failed. from=.\out\receipts\pending\INSPIEN_±èÀ±È£_20260207215306.txt, to=.\out\receipts\sent\INSPIEN_±èÀ±È£_20260207215306.txt, msg=.\out\receipts\pending\INSPIEN_±èÀ±È£_20260207215306.txt -> .\out\receipts\sent\INSPIEN_±èÀ±È£_20260207215306.txt: ´Ù¸¥ ÇÁ·Î¼¼½º°¡ ÆÄÀÏÀ» »ç¿ë ÁßÀÌ±â ¶§¹®¿¡ ÇÁ·Î¼¼½º°¡ ¾×¼¼½º ÇÒ ¼ö ¾ø½À´Ï´Ù
+java.nio.file.FileSystemException: .\out\receipts\pending\INSPIEN_±èÀ±È£_20260207215306.txt -> .\out\receipts\sent\INSPIEN_±èÀ±È£_20260207215306.txt: ´Ù¸¥ ÇÁ·Î¼¼½º°¡ ÆÄÀÏÀ» »ç¿ë ÁßÀÌ±â ¶§¹®¿¡ ÇÁ·Î¼¼½º°¡ ¾×¼¼½º ÇÒ ¼ö ¾ø½À´Ï´Ù
+	at java.base/sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103)
+	at java.base/sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403)
+	at java.base/sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293)
+	at java.base/java.nio.file.Files.move(Files.java:1432)
+	at com.inspien.infra.ReceiptOutbox.moveIfExists(ReceiptOutbox.java:132)
+	at com.inspien.infra.ReceiptOutbox.markSent(ReceiptOutbox.java:85)
+	at com.inspien.scheduler.ReceiptRetryScheduler.retryPending(ReceiptRetryScheduler.java:73)
+	at jdk.internal.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:87)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:305)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+2026-02-07 21:53:40.854 INFO  [74ec16227eb14e54a87448c21d031c1e] com.inspien.infra.SftpUploader - SFTP upload success. remote=/recruit/2026/INSPIEN_±èÀ±È£_20260207215306.txt
+2026-02-07 21:53:40.867 INFO  [74ec16227eb14e54a87448c21d031c1e] com.inspien.service.OrderService - Receipt prepared. traceId=74ec16227eb14e54a87448c21d031c1e, fileName=INSPIEN_±èÀ±È£_20260207215306.txt, isReceiptCreated=true, sftpUploaded=true
+2026-02-07 21:53:41.006 INFO  [74ec16227eb14e54a87448c21d031c1e] com.inspien.web.TraceIdFilter - REQ traceId=74ec16227eb14e54a87448c21d031c1e POST /api/orders -> result=SUCCESS status=200 elapsedMs=35382
+2026-02-07 21:56:38.955 INFO  [SHIPBATCH-20260207215638] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 21:56:39.066 INFO  [SHIPBATCH-20260207215638] c.i.service.ShipmentBatchService - Shipment batch success. inserted=2, updated=2
+2026-02-07 22:01:39.100 INFO  [SHIPBATCH-20260207220139] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 22:01:39.112 INFO  [SHIPBATCH-20260207220139] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 22:06:39.134 INFO  [SHIPBATCH-20260207220639] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 22:06:39.145 INFO  [SHIPBATCH-20260207220639] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 22:11:39.177 INFO  [SHIPBATCH-20260207221139] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 22:11:39.189 INFO  [SHIPBATCH-20260207221139] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 22:16:39.207 INFO  [SHIPBATCH-20260207221639] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 22:16:39.218 INFO  [SHIPBATCH-20260207221639] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 22:21:39.251 INFO  [SHIPBATCH-20260207222139] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 22:21:39.277 INFO  [SHIPBATCH-20260207222139] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 22:26:39.298 INFO  [SHIPBATCH-20260207222639] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 22:26:39.313 INFO  [SHIPBATCH-20260207222639] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 22:31:39.340 INFO  [SHIPBATCH-20260207223139] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 22:31:39.355 INFO  [SHIPBATCH-20260207223139] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 22:36:39.381 INFO  [SHIPBATCH-20260207223639] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 22:36:39.401 INFO  [SHIPBATCH-20260207223639] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 22:41:39.426 INFO  [SHIPBATCH-20260207224139] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 22:41:39.436 INFO  [SHIPBATCH-20260207224139] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 22:46:39.455 INFO  [SHIPBATCH-20260207224639] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 22:46:39.464 INFO  [SHIPBATCH-20260207224639] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 22:51:39.485 INFO  [SHIPBATCH-20260207225139] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 22:51:39.494 INFO  [SHIPBATCH-20260207225139] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 22:56:39.517 INFO  [SHIPBATCH-20260207225639] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 22:56:39.531 INFO  [SHIPBATCH-20260207225639] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 23:01:39.551 INFO  [SHIPBATCH-20260207230139] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 23:01:39.564 INFO  [SHIPBATCH-20260207230139] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 23:06:39.585 INFO  [SHIPBATCH-20260207230639] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 23:06:39.602 INFO  [SHIPBATCH-20260207230639] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 23:11:39.628 INFO  [SHIPBATCH-20260207231139] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 23:11:39.648 INFO  [SHIPBATCH-20260207231139] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 23:16:39.666 INFO  [SHIPBATCH-20260207231639] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 23:16:39.679 INFO  [SHIPBATCH-20260207231639] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 23:21:39.709 INFO  [SHIPBATCH-20260207232139] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 23:21:39.720 INFO  [SHIPBATCH-20260207232139] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 23:26:39.737 INFO  [SHIPBATCH-20260207232639] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 23:26:39.749 INFO  [SHIPBATCH-20260207232639] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 23:31:39.788 INFO  [SHIPBATCH-20260207233139] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 23:31:39.801 INFO  [SHIPBATCH-20260207233139] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 23:35:57.001 INFO  [] com.inspien.InspienApplication - Starting InspienApplication using Java 17.0.18 with PID 9220 (C:\VSCode\inspien\build\classes\java\main started by Yoon Ho Kim in C:\VSCode\inspien)
+2026-02-07 23:35:57.006 INFO  [] com.inspien.InspienApplication - No active profile set, falling back to 1 default profile: "default"
+2026-02-07 23:36:02.051 INFO  [] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-02-07 23:36:02.108 INFO  [] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-02-07 23:36:02.111 INFO  [] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-02-07 23:36:02.393 INFO  [] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-02-07 23:36:02.394 INFO  [] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 5159 ms
+2026-02-07 23:36:05.441 INFO  [] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-02-07 23:36:05.491 INFO  [] com.inspien.InspienApplication - Started InspienApplication in 10.298 seconds (process running for 11.882)
+2026-02-07 23:36:26.579 INFO  [] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-07 23:36:26.581 INFO  [] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-02-07 23:36:26.592 INFO  [] o.s.web.servlet.DispatcherServlet - Completed initialization in 10 ms
+2026-02-07 23:36:28.167 INFO  [cf452e247be8455f83e07cd9ba78b0c4] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-02-07 23:36:31.925 INFO  [cf452e247be8455f83e07cd9ba78b0c4] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@7bfa387a
+2026-02-07 23:36:31.931 INFO  [cf452e247be8455f83e07cd9ba78b0c4] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-02-07 23:36:35.826 INFO  [SHIPBATCH-20260207233635] c.i.service.ShipmentBatchService - Shipment batch start. applicantKey=KYH000004, fetchLimit=200
+2026-02-07 23:36:36.453 INFO  [SHIPBATCH-20260207233635] c.i.service.ShipmentBatchService - Shipment batch end: no target rows.
+2026-02-07 23:36:37.062 INFO  [cf452e247be8455f83e07cd9ba78b0c4] com.inspien.infra.SftpUploader - SFTP connecting... host=211.106.171.36, port=20423, user=inspien, remoteDir=/recruit/2026
+2026-02-07 23:36:46.810 INFO  [cf452e247be8455f83e07cd9ba78b0c4] com.inspien.infra.SftpUploader - SFTP uploading... localFile=.\out\receipts\pending\INSPIEN_±èÀ±È£_20260207233636.txt, remoteFileName=INSPIEN_±èÀ±È£_20260207233636.txt
+2026-02-07 23:36:51.392 INFO  [cf452e247be8455f83e07cd9ba78b0c4] com.inspien.infra.SftpUploader - SFTP upload success. remote=/recruit/2026/INSPIEN_±èÀ±È£_20260207233636.txt
+2026-02-07 23:36:51.427 INFO  [cf452e247be8455f83e07cd9ba78b0c4] com.inspien.service.OrderService - Receipt prepared. traceId=cf452e247be8455f83e07cd9ba78b0c4, fileName=INSPIEN_±èÀ±È£_20260207233636.txt, isReceiptCreated=true, sftpUploaded=true
+2026-02-07 23:36:51.585 INFO  [cf452e247be8455f83e07cd9ba78b0c4] com.inspien.web.TraceIdFilter - REQ traceId=cf452e247be8455f83e07cd9ba78b0c4 POST /api/orders -> result=SUCCESS status=200 elapsedMs=24683

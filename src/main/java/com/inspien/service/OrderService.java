@@ -58,6 +58,7 @@ public class OrderService {
     private int maxAttempts;
 
 
+
     public Map<String, Object> create(String xml) {
         String traceId = MDC.get("traceId");
 
@@ -76,7 +77,9 @@ public class OrderService {
         meta.setFileName(receiptFileName);
         meta.setOrderIds(rows.stream().map(OrderDTO::getOrderId).collect(Collectors.toList()));
         meta.setAttempts(0);
-        meta.setNextAttemptAtEpochMs(System.currentTimeMillis());
+        meta.setNextAttemptAtEpochMs(Long.MAX_VALUE); 
+        // 처음에는 재시도 시간을 크게 잡아서 재시도 스케줄러가 작동하지 않게 설정
+        // 에러 발생 시 해당 값을 현재 시간으로 수정하여 스케줄러 작동
         meta.setLastError(null);
 
         receiptOutbox.writeMetaToPending(meta);
@@ -91,7 +94,7 @@ public class OrderService {
             // 파일 생성 실패해도 meta가 있으므로 스케줄러가 DB로 재생성 가능
             meta.setAttempts(1);
             meta.setLastError("RECEIPT_CREATE_FAIL: " + e.getMessage());
-            meta.setNextAttemptAtEpochMs(receiptOutbox.calcNextAttemptAt(meta.getAttempts()));
+            meta.setNextAttemptAtEpochMs(System.currentTimeMillis());
             receiptOutbox.updateMeta(receiptOutbox.metaPathInPending(receiptFileName), meta);
 
             log.error("Receipt create failed. Will retry via scheduler. traceId={}, fileName={}, msg={}",
@@ -124,7 +127,7 @@ public class OrderService {
                             traceId, receiptFileName, nextAttempts, e.getMessage(), e);
 
                 } else {
-                    meta.setNextAttemptAtEpochMs(receiptOutbox.calcNextAttemptAt(nextAttempts));
+                    meta.setNextAttemptAtEpochMs(System.currentTimeMillis());
                     receiptOutbox.updateMeta(receiptOutbox.metaPathInPending(receiptFileName), meta);
 
                     log.error("SFTP upload failed. Will retry via scheduler. traceId={}, fileName={}, attempts={}, msg={}",
