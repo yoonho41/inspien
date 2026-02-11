@@ -19,7 +19,10 @@ public class AdminReceiptController {
             value = "/receipts/retry",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Map<String, Object>> retryByTraceId(@RequestBody String xml) {
-        return ResponseEntity.ok(adminReceiptService.retryByTraceId(xml));
+    public ResponseEntity<Map<String, Object>> retryByTraceId(
+        @RequestBody String xml,
+        @RequestHeader(value = "adminkey", required = false) String adminKey
+    ) {
+        return ResponseEntity.ok(adminReceiptService.retryByTraceId(xml, adminKey));
     }
 }

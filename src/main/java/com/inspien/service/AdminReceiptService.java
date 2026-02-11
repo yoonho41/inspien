@@ -8,11 +8,14 @@ import com.inspien.mapper.OrderMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.*;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
+import java.security.MessageDigest;
 import java.time.Instant;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -32,10 +35,34 @@ public class AdminReceiptService {
     private static final Pattern RECEIPT_NAME_PATTERN =
             Pattern.compile("^INSPIEN_(.+)_(\\d{14})\\.txt$");
 
-    public Map<String, Object> retryByTraceId(String requestXml) {
-        AdminReq req = parseAdminXml(requestXml);
+    @Value("${inspien.admin.key}")
+    private String expectedAdminKey;
+
+    public Map<String, Object> retryByTraceId(String requestXml, String adminKey) {
 
         String adminTraceId = MDC.get("traceId"); // 관리자 호출 자체의 traceId
+        
+        // 헤더 존재 여부 검사
+        if (adminKey == null || adminKey.isBlank()) {
+            return Map.of(
+                    "traceId", adminTraceId,
+                    "success", false,
+                    "message", "ADMİNKEY header is required"
+            );
+        }
+
+        // 관리자 키 일치 검사
+        if (!safeEquals(expectedAdminKey, adminKey)) {
+            return Map.of(
+                    "traceId", adminTraceId,
+                    "success", false,
+                    "message", "Unauthorized admin key"
+            );
+        }
+
+        AdminReq req = parseAdminXml(requestXml);
+
+        
         if (req.traceId == null || req.traceId.isBlank()) {
             return Map.of(
                     "traceId", adminTraceId,
@@ -289,5 +316,13 @@ public class AdminReceiptService {
             this.meta = meta;
             this.fileName = fileName;
         }
+    }
+
+    private boolean safeEquals(String a, String b) {
+        if (a == null || b == null) return false;
+        return MessageDigest.isEqual(
+                a.getBytes(StandardCharsets.UTF_8),
+                b.getBytes(StandardCharsets.UTF_8)
+        );
     }
 }
